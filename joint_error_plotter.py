@@ -29,7 +29,6 @@ class JointErrorPlotter:
 
     def joint_states_callback(self, msg):
         self.joint_states = msg
-        self.joint_states.header.stamp = rospy.Time.now()
 
     def joint_cmd_callback(self, msg):
         self.joint_cmd = msg
@@ -107,7 +106,7 @@ class JointErrorPlotter:
                             closest_time, closest_value = min(zip(self.joint_pos_times, self.joint_pos[i]), key=lambda x: abs(x[0] - cmd_time))
                             error[i] += abs(cmd_value - closest_value)
                         
-                print([(i, error[i]) for i in range(7)], sum(error))
+                print("Joint errors: ",[(i, error[i]) for i in range(7)], " Total error: ",sum(error))
                     
             self.rate.sleep()
 
